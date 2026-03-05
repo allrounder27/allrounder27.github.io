@@ -427,14 +427,14 @@ body:hover .cursor-glow {
     animation: float 4s ease-in-out infinite;
 }
 
-.card-microsoft {
+.card-oracle {
     top: 10%;
     right: -10%;
     color: var(--accent-light);
 }
 
-.card-microsoft i {
-    color: #00a4ef;
+.card-oracle i {
+    color: #f80000;
 }
 
 .card-location {
