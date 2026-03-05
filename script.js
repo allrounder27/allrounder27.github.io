@@ -107,3 +107,107 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         }
     });
 });
+
+// ============================================
+// Chatbot
+// ============================================
+const CHATBOT_API = 'https://gautam-chatbot.gautambafna.workers.dev';
+
+const chatToggle = document.getElementById('chatbotToggle');
+const chatWindow = document.getElementById('chatbotWindow');
+const chatClose = document.getElementById('chatbotClose');
+const chatForm = document.getElementById('chatbotForm');
+const chatInput = document.getElementById('chatbotInput');
+const chatMessages = document.getElementById('chatbotMessages');
+const chatSend = document.getElementById('chatbotSend');
+
+let chatHistory = [];
+
+chatToggle.addEventListener('click', () => {
+    chatWindow.classList.add('open');
+    chatToggle.classList.add('hidden');
+    chatInput.focus();
+});
+
+chatClose.addEventListener('click', () => {
+    chatWindow.classList.remove('open');
+    chatToggle.classList.remove('hidden');
+});
+
+// Close chatbot on Escape key
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && chatWindow.classList.contains('open')) {
+        chatWindow.classList.remove('open');
+        chatToggle.classList.remove('hidden');
+    }
+});
+
+function addMessage(text, sender) {
+    const msg = document.createElement('div');
+    msg.className = `chat-message ${sender}`;
+    msg.innerHTML = `<div class="chat-bubble">${escapeHTML(text)}</div>`;
+    chatMessages.appendChild(msg);
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+}
+
+function addTypingIndicator() {
+    const msg = document.createElement('div');
+    msg.className = 'chat-message bot';
+    msg.id = 'typingIndicator';
+    msg.innerHTML = `<div class="chat-bubble chat-typing"><span></span><span></span><span></span></div>`;
+    chatMessages.appendChild(msg);
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+}
+
+function removeTypingIndicator() {
+    const el = document.getElementById('typingIndicator');
+    if (el) el.remove();
+}
+
+function escapeHTML(str) {
+    const div = document.createElement('div');
+    div.textContent = str;
+    return div.innerHTML;
+}
+
+chatForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const text = chatInput.value.trim();
+    if (!text) return;
+
+    addMessage(text, 'user');
+    chatInput.value = '';
+    chatSend.disabled = true;
+
+    chatHistory.push({ role: 'user', content: text });
+
+    // Keep last 10 messages for context
+    const messagesToSend = chatHistory.slice(-10);
+
+    addTypingIndicator();
+
+    try {
+        const res = await fetch(CHATBOT_API, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ messages: messagesToSend }),
+        });
+
+        removeTypingIndicator();
+
+        if (!res.ok) {
+            throw new Error('API error');
+        }
+
+        const data = await res.json();
+        const reply = data.reply || "Sorry, I couldn't process that.";
+        addMessage(reply, 'bot');
+        chatHistory.push({ role: 'assistant', content: reply });
+    } catch (err) {
+        removeTypingIndicator();
+        addMessage("Oops, something went wrong. Please try again!", 'bot');
+    }
+
+    chatSend.disabled = false;
+    chatInput.focus();
+});

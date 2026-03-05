@@ -506,6 +506,38 @@
         </div>
     </section>
 
+    <!-- Chatbot -->
+    <button class="chatbot-toggle" id="chatbotToggle" aria-label="Open chat">
+        <i class="fa-solid fa-comments"></i>
+        <span class="chatbot-pulse"></span>
+    </button>
+
+    <div class="chatbot-window" id="chatbotWindow">
+        <div class="chatbot-header">
+            <div class="chatbot-header-info">
+                <div class="chatbot-avatar">GB</div>
+                <div>
+                    <span class="chatbot-header-name">Chat with Gautam's AI</span>
+                    <span class="chatbot-header-status"><span class="status-dot"></span> Online</span>
+                </div>
+            </div>
+            <button class="chatbot-close" id="chatbotClose" aria-label="Close chat">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+        </div>
+        <div class="chatbot-messages" id="chatbotMessages">
+            <div class="chat-message bot">
+                <div class="chat-bubble">Hey! 👋 I'm Gautam's AI assistant. Ask me anything about his career, skills, projects, or interests!</div>
+            </div>
+        </div>
+        <form class="chatbot-input-area" id="chatbotForm">
+            <input type="text" class="chatbot-input" id="chatbotInput" placeholder="Ask me anything..." autocomplete="off">
+            <button type="submit" class="chatbot-send" id="chatbotSend" aria-label="Send message">
+                <i class="fa-solid fa-paper-plane"></i>
+            </button>
+        </form>
+    </div>
+
     <!-- Footer -->
     <footer class="footer">
         <div class="container">
