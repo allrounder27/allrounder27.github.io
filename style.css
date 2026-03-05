@@ -439,9 +439,8 @@ body:hover .cursor-glow {
 }
 
 .card-oracle {
-    top: 50%;
+    bottom: 10%;
     right: -12%;
-    transform: translateY(-50%);
     color: #f80000;
     animation-delay: 1s;
 }
