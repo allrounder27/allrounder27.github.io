@@ -395,6 +395,7 @@ body:hover .cursor-glow {
     position: relative;
     z-index: 2;
     border: 3px solid var(--border-light);
+    filter: brightness(1.15);
 }
 
 .hero-image-ring {
@@ -428,7 +429,7 @@ body:hover .cursor-glow {
 }
 
 .card-microsoft {
-    top: 10%;
+    top: 5%;
     right: -10%;
     color: var(--accent-light);
 }
@@ -437,8 +438,20 @@ body:hover .cursor-glow {
     color: #00a4ef;
 }
 
+.card-oracle {
+    top: 50%;
+    right: -12%;
+    transform: translateY(-50%);
+    color: #f80000;
+    animation-delay: 1s;
+}
+
+.card-oracle i {
+    color: #f80000;
+}
+
 .card-location {
-    bottom: 10%;
+    bottom: 5%;
     left: -5%;
     color: var(--accent-secondary);
     animation-delay: 2s;
@@ -1176,12 +1189,19 @@ body:hover .cursor-glow {
 
     .card-microsoft {
         right: 5%;
-        top: 0;
+        top: -5%;
+    }
+
+    .card-oracle {
+        right: 0%;
+        top: auto;
+        bottom: -5%;
+        transform: none;
     }
 
     .card-location {
         left: 5%;
-        bottom: 0;
+        bottom: 30%;
     }
 
     .interests-grid {
